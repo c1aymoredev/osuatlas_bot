@@ -22,7 +22,7 @@ class CommandHandler:
             mods = parse_mods(mods_str.split())
             beatmap_path = self.api_client.download_map(map_id)
             map_info = self.api_client.get_map_info(map_id)
-            print(f"Debug - map_info: {map_info}")  # Добавьте эту строку для отладки
+            print(f"Debug - map_info: {map_info}")
             pp_values, stars, ar, od, cs, hp = self.pp_calculator.calculate_pp(beatmap_path, mods)
             return self.pp_calculator.format_pp_result(map_info, pp_values, stars, ar, od, cs, hp, mods)
         except ValueError as e:
@@ -48,3 +48,14 @@ class CommandHandler:
     def handle_recommendation_command(self, message: str, sender: str) -> str:
         params = message.split()[1:]
         return self.recommender.get_recommendation(sender, params)
+    
+    def handle_notifyme_command(self, message: str, sender: str) -> str:
+        parts = message.split()
+        if len(parts) != 2:
+            return "Usage: !notifyme <twitch_username>"
+        
+        twitch_username = parts[1]
+        if self.bot.twitch_integration.subscribe_to_stream(sender, twitch_username):
+            return f"You will be notified when {twitch_username} starts streaming."
+        else:
+            return f"Failed to subscribe to {twitch_username}. Please check the username and try again."

@@ -5,6 +5,8 @@ from services.osu_api_client import OsuAPIClient
 from services.pp_calculator import PPCalculator
 from services.beatmap_recommender import BeatmapRecommender
 from utils.utils import UserException
+from .twitch_integration import TwitchIntegration
+
 
 class OsuBot:
     def __init__(self):
@@ -14,6 +16,7 @@ class OsuBot:
         self.api_client = OsuAPIClient()
         self.pp_calculator = PPCalculator()
         self.recommender = BeatmapRecommender()
+        self.twitch_integration = TwitchIntegration(self)
         self.last_map = {}
 
     def start(self):
@@ -29,6 +32,8 @@ class OsuBot:
                 response = self.command_handler.handle_with_command(message, sender)
             elif message.startswith("!r"):
                 response = self.command_handler.handle_recommendation_command(message, sender)
+            elif message.startswith("!notifyme"):
+                response = self.command_handler.handle_notifyme_command(message, sender)
             else:
                 response = "Unknown command"
             

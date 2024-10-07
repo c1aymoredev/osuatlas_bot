@@ -31,7 +31,7 @@ class OsuAPIClient:
         if response.status_code == 200:
             data = response.json()
             if data:
-                return data[0]  # API возвращает список, нам нужен первый элемент
+                return data[0]
             else:
                 raise ValueError("Map not found")
         else:
