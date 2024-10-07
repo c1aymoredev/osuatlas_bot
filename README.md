@@ -1,4 +1,4 @@
-# osu! IRC Bot
+# osuAtlas! IRC Bot
 
 An IRC bot for osu! that provides various functionalities including performance point (PP) calculation, beatmap recommendations, and now playing (NP) handling.
 
