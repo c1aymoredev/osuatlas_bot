@@ -16,7 +16,7 @@ class IRCClient(irc.bot.SingleServerIRCBot):
         super().start()
 
     def on_welcome(self, connection, event):
-        logging.info(f"Бот {connection.get_nickname()} подключился к IRC серверу.")
+        logging.info(f"Bot {connection.get_nickname()} connected to the IRC server.")
 
     def on_pubmsg(self, connection, event):
         self.bot.handle_message(event.arguments[0], connection, event.source.nick, is_private=False)
@@ -34,4 +34,4 @@ class IRCClient(irc.bot.SingleServerIRCBot):
             else:
                 connection.privmsg(self.channel, message)
         else:
-            print(f"Отправлено сообщение для {target}: {message}")
+            print(f"Message sent to {target}: {message}")

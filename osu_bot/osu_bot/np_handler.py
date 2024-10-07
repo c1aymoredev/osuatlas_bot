@@ -32,13 +32,13 @@ class NPHandler:
             self.bot.last_map[sender] = {'id': beatmap_id, 'mods': mods}
             return response
         except Exception as e:
-            logging.error(f"Ошибка при обработке NP сообщения: {str(e)}", exc_info=True)
-            return f"Произошла ошибка при обработке NP сообщения: {str(e)}"
+            logging.error(f"Error processing NP message: {str(e)}", exc_info=True)
+            return f"An error occurred while processing the NP message: {str(e)}"
 
     def parse_np(self, message: str) -> Optional[Tuple[int, List[str], str, str]]:
         match = self.NP_PATTERN.search(message)
         if not match:
-            logging.error(f"NP сообщение не совпадает с паттерном: {message}")
+            logging.error(f"NP message does not match pattern: {message}")
             return None
         
         self.log_match_groups(match)
@@ -63,7 +63,7 @@ class NPHandler:
                     title = "Unknown Title"
                     version = "Unknown Difficulty"
             except Exception as e:
-                logging.error(f"Ошибка при получении информации о карте: {str(e)}")
+                logging.error(f"Error retrieving card information: {str(e)}")
                 artist = "Unknown Artist"
                 title = "Unknown Title"
                 version = "Unknown Difficulty"
@@ -76,7 +76,7 @@ class NPHandler:
         mods_list = mods_str.split()
         
         full_title = f"{title} [{version}]"
-        logging.info(f"Извлеченные данные: ID={beatmap_id}, Моды={mods_list}, Исполнитель={artist}, Название={full_title}")
+        logging.info(f"Extracted data: ID={beatmap_id}, Mods={mods_list}, Artist={artist}, Title={full_title}")
         return (beatmap_id, mods_list, artist, full_title)
 
     def log_match_groups(self, match):

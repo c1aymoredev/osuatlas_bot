@@ -30,14 +30,14 @@ class OsuBot:
             elif message.startswith("!r"):
                 response = self.command_handler.handle_recommendation_command(message, sender)
             else:
-                response = "Неизвестная команда"
+                response = "Unknown command"
             
             if response:
                 self.send_message(connection, sender, response, is_private)
         except UserException as e:
             self.send_message(connection, sender, str(e), is_private)
         except Exception as e:
-            self.send_message(connection, sender, f"Произошла ошибка: {str(e)}", is_private)
+            self.send_message(connection, sender, f"An error occurred: {str(e)}", is_private)
 
     def send_message(self, connection, target: str, message: str, is_private: bool):
         self.irc_client.send_message(connection, target, message, is_private)

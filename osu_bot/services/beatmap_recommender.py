@@ -20,7 +20,7 @@ class BeatmapRecommender:
 
         recommended_map = self._get_recommendation(average_pp, mods_string, tags, self.recommended_maps.get(username, set()))
         if not recommended_map:
-            return "Нет подходящих карт для вас с заданными параметрами ;("
+            return "There are no suitable maps for you with the given parameters ;("
 
         self.recommended_maps.setdefault(username, set()).add(recommended_map['id'])
 

@@ -13,7 +13,7 @@ class CommandHandler:
     def handle_pp_command(self, message: str) -> str:
         parts = message.split()
         if len(parts) < 2:
-            return "Пожалуйста, укажите ID карты."
+            return "Please provide map ID."
         
         map_id = parts[1]
         mods_str = ' '.join(parts[2:]) if len(parts) > 2 else 'NM'
@@ -26,19 +26,19 @@ class CommandHandler:
             pp_values, stars, ar, od, cs, hp = self.pp_calculator.calculate_pp(beatmap_path, mods)
             return self.pp_calculator.format_pp_result(map_info, pp_values, stars, ar, od, cs, hp, mods)
         except ValueError as e:
-            return f"Ошибка: {str(e)}"
+            return f"Error: {str(e)}"
         except ConnectionError as e:
-            return f"Ошибка при скачивании карты: {str(e)}"
+            return f"Error downloading map: {str(e)}"
         except Exception as e:
-            return f"Произошла неизвестная ошибка: {str(e)}"
+            return f"An unknown error occurred: {str(e)}"
 
     def handle_with_command(self, message: str, sender: str) -> str:
         if sender not in self.bot.last_map:
-            return "Сначала используйте команду /np или !pp для выбора карты."
+            return "First use the /np or !pp command to select a map."
         
         parts = message.split()
         if len(parts) < 2:
-            return "Пожалуйста, укажите моды. Пример: !with HDDT"
+            return "Please specify mods. Example: !with HDDT"
         
         new_mods = ' '.join(parts[1:])
         map_id = self.bot.last_map[sender]['id']

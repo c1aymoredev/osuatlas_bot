@@ -23,6 +23,6 @@ if __name__ == "__main__":
     try:
         bot.start()
     except KeyboardInterrupt:
-        logging.info("Бот остановлен.")
+        logging.info("The bot has been stopped.")
     except Exception as e:
-        logging.error(f"Произошла ошибка: {e}")
+        logging.error(f"An error occurred: {e}")
