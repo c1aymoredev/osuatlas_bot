@@ -33,3 +33,9 @@ class PPCalculator:
             f"| AR:{ar:.1f} OD:{od:.1f} CS:{cs:.1f} HP:{hp:.1f} "
             f"| PP: 95%: {pp_values['95']}pp, 98%: {pp_values['98']}pp, 99%: {pp_values['99']}pp, 100%: {pp_values['100']}pp"
         )
+        
+    def calculate_fc_pp(self, beatmap_path: str, mods: int, accuracy: float, combo: int) -> float:
+        beatmap = Beatmap(path=beatmap_path)
+        perf = Performance(accuracy=accuracy, mods=mods, combo=combo)
+        attrs = perf.calculate(beatmap)
+        return attrs.pp

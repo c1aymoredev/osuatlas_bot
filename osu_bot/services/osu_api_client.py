@@ -28,14 +28,37 @@ class OsuAPIClient:
             'b': map_id
         }
         response = self.rate_limited_request(url, params=params)
+        
+        # Добавляем print для вывода ответа перед парсингом
+        print(f"Response status code: {response.status_code}")
+        print(f"Response content: {response.text}")
+        
         if response.status_code == 200:
-            data = response.json()
+            data = response.json()  # Ошибка может возникнуть здесь
             if data:
                 return data[0]
             else:
                 raise ValueError("Map not found")
         else:
             raise ConnectionError(f"Failed to get map info. Status code: {response.status_code}")
+
+        
+    def get_user_stats(self, username: str) -> dict:
+        url = f"https://osu.ppy.sh/api/get_user"
+        params = {
+            'k': self.api_key,
+            'u': username,
+            'm': 0
+        }
+        response = self.rate_limited_request(url, params=params)
+        if response.status_code == 200:
+            data = response.json()
+            if data:
+                return data[0]
+            else:
+                raise ValueError("User not found")
+        else:
+            raise ConnectionError(f"Failed to get user stats. Status code: {response.status_code}")
 
     def download_map(self, map_id: str) -> str:
         file_path = os.path.join(MAPS_DIRECTORY, f"{map_id}.osu")
@@ -48,6 +71,25 @@ class OsuAPIClient:
             else:
                 raise ConnectionError("Failed to download .osu file")
         return file_path
+    
+    def get_last_play(self, username: str) -> dict:
+        url = "https://osu.ppy.sh/api/get_user_recent"
+        params = {
+            'k': self.api_key,
+            'u': username,
+            'm': 0,
+            'limit': 1,
+            'type': 'string'
+        }
+        response = self.rate_limited_request(url, params=params)
+        if response.status_code == 200:
+            data = response.json()
+            if data:
+                return data[0]
+            else:
+                raise ValueError("No recent plays found")
+        else:
+            raise ConnectionError(f"Failed to get recent play. Status code: {response.status_code}")
 
     def get_user_top_scores(self, username: str, limit: int = 10) -> List[Dict[str, Any]]:
         url = f"https://osu.ppy.sh/api/get_user_best?k={OSU_API_KEY}&u={username}&m=0&limit={limit}"
