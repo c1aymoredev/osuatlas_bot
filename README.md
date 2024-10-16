@@ -16,7 +16,11 @@ An IRC bot for osu! that provides various functionalities including performance 
 - `!pp <beatmap_id> [mods]`: Calculate PP for the specified beatmap with optional mods.
 - `!r [params]`: Get a beatmap recommendation based on your recent plays and specified tags (dt,hr,nm,aim,consistency,speed, tech).
 - `!with <mods>`: Recalculate PP for the last beatmap with new mods.
+- `!stats <nickname>`: Get player stats.
+- `!compare <nickname1> <nickname2>`: Compare statistics of two players.
+- `!fc`: Find out the number of pp for the last played map taking into account your accuracy.
 - `!notifyme <streamer_nickname>`: Subscribe to notifications about twitch broadcasts.
+
 
 ## Acknowledgements
 
